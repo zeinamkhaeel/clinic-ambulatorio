@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <!-- Page Title -->
+  <h2 style="
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background-color: #05112d;
+    color: #cccfd3;
+    padding: 15px 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+  ">
+    Modifica Paziente
+  </h2>
+
+  <form method="post" class="p-4 border rounded shadow-sm bg-light">
+    {% csrf_token %}
+
+    <!-- Top: two columns -->
+    <div class="row">
+      <!-- Left column -->
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Cognome</label>
+          {{ form.cognome|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">N° cartella</label>
+          {{ form.numero_cartella|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nazionalità</label>
+          {{ form.nazionalita|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Data arrivo in Italia</label>
+          {{ form.data_arrivo_italia|attr:"type:date"|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Professione paese d’origine</label>
+          {{ form.professione_origine|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">STP</label>
+          {{ form.stp|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Nome</label>
+          {{ form.nome|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Prima visita</label>
+          {{ form.prima_visita|attr:"type:date"|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Data di nascita</label>
+          {{ form.data_nascita|attr:"type:date"|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">N° di telefono</label>
+          {{ form.telefono|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Professione in Italia</label>
+          {{ form.professione_italia|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Esenzioni</label>
+          {{ form.esenzioni|add_class:"form-control" }}
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Select-like fields -->
+    <div class="mb-3">
+      <label class="form-label"><strong>Motivo migrazione</strong></label>
+      {{ form.motivo_migrazione|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Titolo di studio</strong></label>
+      {{ form.titolo_studio|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Occupazione</strong></label>
+      {{ form.occupazione|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Stile di vita</strong></label>
+      {{ form.stile_vita|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Conoscenza italiano</strong></label>
+      {{ form.conoscenza_italiano|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Seconda lingua</strong></label>
+      {{ form.seconda_lingua|add_class:"form-control" }}
+    </div>
+
+    <hr>
+
+    <!-- Anamnesi familiare -->
+    <div class="mb-3">
+      <h5 class="mb-2">Anamnesi familiare</h5>
+      <div class="row row-cols-2 row-cols-md-3 g-2">
+        <label class="col form-check">{{ form.fam_ipertensione }} <span class="ms-1">Ipertensione</span></label>
+        <label class="col form-check">{{ form.fam_diabete }} <span class="ms-1">Diabete</span></label>
+        <label class="col form-check">{{ form.fam_epilessia }} <span class="ms-1">Epilessia</span></label>
+        <label class="col form-check">{{ form.fam_infarto }} <span class="ms-1">Infarto</span></label>
+        <label class="col form-check">{{ form.fam_neoplasia }} <span class="ms-1">Neoplasia</span></label>
+        <label class="col form-check">{{ form.fam_mal_immunologiche }} <span class="ms-1">Malattie immunologiche</span></label>
+        <label class="col form-check">{{ form.fam_stroke }} <span class="ms-1">Stroke</span></label>
+        <label class="col form-check">{{ form.fam_tbc_hiv_hbv_hcv }} <span class="ms-1">TBC/HIV/HBV/HCV</span></label>
+        <label class="col form-check">{{ form.fam_mal_renali }} <span class="ms-1">Malattie renali</span></label>
+      </div>
+      <div class="mt-2">
+        <label class="form-label">Altro (specificare)</label>
+        {{ form.fam_altro|add_class:"form-control" }}
+      </div>
+    </div>
+
+    <!-- Anamnesi patologica remota -->
+    <div class="mb-3">
+      <h5 class="mb-2">Anamnesi patologica remota</h5>
+      <div class="row row-cols-2 row-cols-md-3 g-2">
+        <label class="col form-check">{{ form.rem_ipertensione }} <span class="ms-1">Ipertensione</span></label>
+        <label class="col form-check">{{ form.rem_diabete }} <span class="ms-1">Diabete</span></label>
+        <label class="col form-check">{{ form.rem_tbc }} <span class="ms-1">TBC</span></label>
+        <label class="col form-check">{{ form.rem_mal_immunologiche }} <span class="ms-1">Mal. immunologiche</span></label>
+        <label class="col form-check">{{ form.rem_infarto }} <span class="ms-1">Infarto</span></label>
+        <label class="col form-check">{{ form.rem_neoplasia }} <span class="ms-1">Neoplasia</span></label>
+        <label class="col form-check">{{ form.rem_hiv }} <span class="ms-1">HIV</span></label>
+        <label class="col form-check">{{ form.rem_mal_renali }} <span class="ms-1">Mal. renali</span></label>
+        <label class="col form-check">{{ form.rem_stroke }} <span class="ms-1">Stroke</span></label>
+        <label class="col form-check">{{ form.rem_epilessia }} <span class="ms-1">Epilessia</span></label>
+        <label class="col form-check">{{ form.rem_hbv_hcv }} <span class="ms-1">HBV/HCV</span></label>
+      </div>
+    </div>
+
+    <!-- Allergie -->
+    <div class="mb-3">
+      <label class="form-label"><strong>Allergie</strong></label>
+      {{ form.allergie|add_class:"form-control" }}
+    </div>
+
+    <!-- Abitudini -->
+    <div class="mb-3">
+      <h5 class="mb-2">Abitudini</h5>
+      <div class="d-flex flex-wrap gap-3">
+        <label class="form-check">{{ form.fumo }} <span class="ms-1">Fumo</span></label>
+        <label class="form-check">{{ form.alcool }} <span class="ms-1">Alcool</span></label>
+        <label class="form-check">{{ form.droghe }} <span class="ms-1">Sostanze stupefacenti</span></label>
+      </div>
+    </div>
+
+    <!-- Textareas / narrative fields -->
+    <div class="mb-3">
+      <label class="form-label"><strong>Terapia</strong></label>
+      {{ form.terapia|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Farmaci particolari/costosi</strong></label>
+      {{ form.farmaci_costosi|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Anamnesi patologica prossima / Motivo della visita</strong></label>
+      {{ form.motivo_visita|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Esame obiettivo</strong></label>
+      {{ form.esame_obiettivo|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Programma</strong></label>
+      {{ form.programma|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"><strong>Diario clinico</strong></label>
+      {{ form.diario_clinico|add_class:"form-control" }}
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-4 text-center">
+      <button type="submit" class="btn btn-warning btn-lg px-5">✏ Aggiorna</button>
+      <a href="{% url 'home' %}" class="btn btn-secondary btn-lg px-5">↩ Annulla</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

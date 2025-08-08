@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  
+  <!-- Title -->
+  <h2 style="
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background-color: #05112d;
+    color: #cccfd3;
+    padding: 15px 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+  ">
+    Gestione del paziente
+  </h2>
+
+  <!-- Search & Add -->
+  <div class="d-flex justify-content-between mb-3">
+    <form method="get" class="d-flex" style="width: 30%;">
+      <input type="text" name="q" placeholder="Entra.." value="{{ query|default:'' }}" class="form-control me-2">
+      <button type="submit" class="btn btn-primary btn-sm">ricerca</button>
+    </form>
+    <a href="{% url 'add_patient' %}" class="btn btn-success btn-sm">+ aggiungere nuovo paziente</a>
+  </div>
+
+  <!-- Table -->
+  <table class="table table-bordered">
+    <thead class="table-primary">
+      <tr>
+        <th>Cognome</th>
+        <th>Nome</th>
+        <th>N° Cartella</th>
+        <th>Nazionalità</th>
+        <th style="width: 110px;">Azioni</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for patient in patients %}
+      <tr>
+        <td>{{ patient.cognome }}</td>
+        <td>{{ patient.nome }}</td>
+        <td>{{ patient.numero_cartella }}</td>
+        <td>{{ patient.nazionalita }}</td>
+        <td class="text-center">
+          <div class="d-flex justify-content-center gap-1">
+            <!-- Edit Button -->
+         <a href="{% url 'edit_patient' patient.id %}" 
+   class="btn btn-outline-warning btn-sm" title="Modifica">
+  <span class="material-icons" style="font-size: 18px;">edit</span>
+</a>
+
+<a href="{% url 'delete_patient' patient.id %}" 
+   class="btn btn-outline-danger btn-sm" title="Elimina"
+   onclick="return confirm('Sei sicuro di voler eliminare questo paziente?');">
+  <span class="material-icons" style="font-size: 18px;">delete</span>
+</a>
+
+
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="text-center">Nessun paziente trovato.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  {% if patients.has_other_pages %}
+  <nav>
+    <ul class="pagination justify-content-center">
+      {% if patients.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?q={{ query }}&page={{ patients.previous_page_number }}">Precedente</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Precedente</span></li>
+      {% endif %}
+
+      {% for num in patients.paginator.page_range %}
+        {% if patients.number == num %}
+          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?q={{ query }}&page={{ num }}">{{ num }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if patients.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?q={{ query }}&page={{ patients.next_page_number }}">Successivo</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Successivo</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+
+</div>
+{% endblock %}
